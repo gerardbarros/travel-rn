@@ -3,16 +3,37 @@ import { Link, useNavigate } from 'react-router-dom'
 import { Form, Button, Row, Col } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import FormContainer from '../components/FormContainer'
-import { useLoginMutation } from '../../slices/usersApiSlice'
-import { setCredentials } from '../../slices/authSlice'
+import { useLoginMutation } from '../../slices/usersApiSlice.js'
+import { setCredentials } from '../../slices/authSlice.js'
 
 const LoginScreen = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+
+    const [login, { isLoading }] = useLoginMutation()
+
+    // if theres userinfo it means were logged in
+    const { userInfo } = useSelector((state) => state.auth)
+
+    // redirect to homepage if we're logged in and we go to login screen
+    useEffect(() => {
+        if (userInfo) {
+            navigate('/')
+        }
+    }, [navigate, userInfo])
+
     const submitHandler = async (e) => {
-        e.prevenDefault()
-        console.log('submit')
+        e.preventDefault()
+        try {
+            const res = await login({ email, password }).unwrap()
+            dispatch(setCredentials({...res}))
+            navigate('/')
+        } catch (error) {
+            console.log(err?.data?.message || err.error)
+        }
     }
 
     return (
