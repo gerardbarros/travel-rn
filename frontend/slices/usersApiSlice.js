@@ -1,5 +1,4 @@
 import { apiSlice } from "../slices/apiSlice.js"
-
 const USERS_URL = '/api/users'
 
 // create endpoints in file and injects it to api slice endpoints
