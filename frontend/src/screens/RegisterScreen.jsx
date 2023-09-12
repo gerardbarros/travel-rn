@@ -29,7 +29,7 @@ const RegisterScreen = () => {
     }, [navigate, userInfo])
 
     const submitHandler = async (e) => {
-        e.prevenDefault()
+        e.preventDefault()
         if(password !== confirmPassword) {
             toast.error('Passwords do not match')
         } else {
@@ -88,7 +88,7 @@ const RegisterScreen = () => {
                     ></Form.Control>
                 </Form.Group>
                 
-                { isLoading && <Loader/>}
+                { isLoading && <Loader /> }
 
                 <Button type='submit' variant='primary' className='mt-3'>
                     Sign Up
