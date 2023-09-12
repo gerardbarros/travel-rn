@@ -15,7 +15,7 @@ const Header = () => {
 
     const [logoutApiCall] = useLogoutMutation()
 
-    const  logoutHandler  = async () => {
+    const logoutHandler = async () => {
         try {
             await logoutApiCall().unwrap()
             dispatch(logout())
